@@ -134,3 +134,4 @@ int do7009(struct user *p, int res, void *c);
 	Èç¹û³ö´íreturn -1
  */
 
+void 	protocol(int connfd, void *con);

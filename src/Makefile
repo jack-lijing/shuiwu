@@ -1,6 +1,6 @@
 all:server client test89
 server:
-	gcc -g -o echoservert echoservert.c do.c log.c csapp.c -I ../include/ -lpthread `mysql_config --cflags --libs`
+	gcc -g -o echoservert main_linux.c  protocol.c do-stub.c log.c csapp.c -I ../include/ -lpthread `mysql_config --cflags --libs`
 client:
 	gcc -g -o testcli testcli.c log.c
 test89:
