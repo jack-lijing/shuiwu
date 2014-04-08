@@ -1,4 +1,5 @@
-all:
-	gcc -g -o testcli testcli-utf8.c log.c
+test:
+	gcc -g -o testcli testcli.c ../src/csapp.c
+	gcc -g -o test89 test89.c ../src/csapp.c
 clean:
-	rm log.0* testcli 
+	rm  testcli test89 ser* 700*

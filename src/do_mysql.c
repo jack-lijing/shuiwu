@@ -1,5 +1,5 @@
 
-/************************* DB è°ƒç”¨å‡½æ•°**************/
+/************************* DB µ÷ÓÃº¯Êı**************/
 #include 	<string.h>
 #include	<mysql.h>
 #include	<my_global.h>
@@ -59,9 +59,9 @@ MYSQL_RES* Mysql_store_result(MYSQL *con)
 
 }
 
-/***********7000:æŸ¥è¯¢ç”¨æˆ·ä¿¡æ¯*************/
-/*è¾“å…¥:ç”¨æˆ·æ°´è´¹æˆ·å·*/
-/*è¾“å‡º:å“åº”æŠ¥æ–‡(åŒ…å«ç”¨æˆ·ä¿¡æ¯)*/	
+/***********7000:²éÑ¯ÓÃ»§ĞÅÏ¢*************/
+/*ÊäÈë:ÓÃ»§Ë®·Ñ»§ºÅ*/
+/*Êä³ö:ÏìÓ¦±¨ÎÄ(°üº¬ÓÃ»§ĞÅÏ¢)*/	
 int do7000(Send *S, struct user *p, Recv *R ,void *c)
 {
 	MYSQL *con = (MYSQL *)c;
@@ -80,7 +80,7 @@ int do7000(Send *S, struct user *p, Recv *R ,void *c)
 		strncpy(p->addr, row[1], ADDRLEN);
 	}
 	mysql_free_result(result);
-	//ç»„è£…å“åº”æŠ¥æ–‡ä¸»ä½“
+	//×é×°ÏìÓ¦±¨ÎÄÖ÷Ìå
 	sprintf(S->buffer + HEADLEN_30, "%-12.12s%-60.60s%-60.60s",  
 					p->pwater->account ,
 					p->name,
@@ -88,10 +88,10 @@ int do7000(Send *S, struct user *p, Recv *R ,void *c)
 
 }
 
-/***********7001:ç”¨æˆ·ç­¾çº¦ç¡®è®¤*************/
-/*è¾“å…¥:ç”¨æˆ·æ°´è´¹æˆ·å·	+	ç”¨æˆ·é“¶è¡Œå¸å·	*/
-/*è¾“å‡º:å“åº”æŠ¥æ–‡					*/	
-//7001ä¸šåŠ¡ä¹‹å‰
+/***********7001:ÓÃ»§Ç©Ô¼È·ÈÏ*************/
+/*ÊäÈë:ÓÃ»§Ë®·Ñ»§ºÅ	+	ÓÃ»§ÒøĞĞÕÊºÅ	*/
+/*Êä³ö:ÏìÓ¦±¨ÎÄ					*/	
+//7001ÒµÎñÖ®Ç°
 int do7001(Send *S, struct user *p, Recv *R, void *c)
 {
 	MYSQL *con = (MYSQL *)c;
@@ -104,9 +104,9 @@ int do7001(Send *S, struct user *p, Recv *R, void *c)
 	}
 }
 
-/***********7002:ç”¨æˆ·ç­¾çº¦ä¿®æ”¹*************/
-/*è¾“å…¥:ç”¨æˆ·æ°´è´¹æˆ·å·	+	ç”¨æˆ·é“¶è¡Œå¸å·	*/
-/*è¾“å‡º:å“åº”æŠ¥æ–‡					*/	
+/***********7002:ÓÃ»§Ç©Ô¼ĞŞ¸Ä*************/
+/*ÊäÈë:ÓÃ»§Ë®·Ñ»§ºÅ	+	ÓÃ»§ÒøĞĞÕÊºÅ	*/
+/*Êä³ö:ÏìÓ¦±¨ÎÄ					*/	
 int do7002(Send *S, struct user *p, Recv *R, void *c)
 {
 	MYSQL *con = (MYSQL *)c;
@@ -119,9 +119,9 @@ int do7002(Send *S, struct user *p, Recv *R, void *c)
 	}
 }
 
-/***********7003:ç”¨æˆ·ç­¾çº¦åˆ é™¤*************/
-//è¾“å…¥:ç”¨æˆ·æ°´è´¹æˆ·å·			
-//è¾“å‡º:å“åº”æŠ¥æ–‡  		é“¶è¡Œå¸å·è‡³ä¸ºç©ºä¸²
+/***********7003:ÓÃ»§Ç©Ô¼É¾³ı*************/
+//ÊäÈë:ÓÃ»§Ë®·Ñ»§ºÅ			
+//Êä³ö:ÏìÓ¦±¨ÎÄ  		ÒøĞĞÕÊºÅÖÁÎª¿Õ´®
 int do7003(Send *S, struct user *p, Recv *R, void *c)
 {
 	MYSQL *con = (MYSQL *)c;
@@ -134,7 +134,7 @@ int do7003(Send *S, struct user *p, Recv *R, void *c)
 	}
 }
 
-/***************************ç¼´è´¹ä¿¡æ¯æŸ¥è¯¢***********/
+/***************************½É·ÑĞÅÏ¢²éÑ¯***********/
 int do7004(Send *S, struct user *p, Recv *R, void *c)
 {
 	MYSQL *con = (MYSQL *)c;
@@ -153,7 +153,7 @@ int do7004(Send *S, struct user *p, Recv *R, void *c)
 
 	MYSQL_ROW row;
 	int 	m = 0;
-	//æœ€å¤šè·å–MONTHNUMä¸ªæœˆçš„æ¬ æ¬¾,é»˜è®¤ä¸º12ä¸ªæœˆ
+	//×î¶à»ñÈ¡MONTHNUM¸öÔÂµÄÇ·¿î,Ä¬ÈÏÎª12¸öÔÂ
 	while((row = mysql_fetch_row(result)) != 0 && m < MONTHNUM)
 	{
 			strncpy(p->name, row[1], NAMELEN);
@@ -167,11 +167,11 @@ int do7004(Send *S, struct user *p, Recv *R, void *c)
 	p->pwater->months = mysql_num_rows(result);
 	mysql_free_result(result);
 
-	//å¡«å……æ¬ æ¬¾æ€»é¢ä¿¡æ¯
+	//Ìî³äÇ·¿î×Ü¶îĞÅÏ¢
 	sprintf(S->buffer + HEADLEN_30, SBODY7004, p->pwater->account, p->name,  p->addr, p->pwater->bill_total, 
 	       p->pwater->months);
 
-	//å¡«å……æ¬ æ¬¾è¯¦ç»†ä¿¡æ¯
+	//Ìî³äÇ·¿îÏêÏ¸ĞÅÏ¢
 	char	*pbill		= S->buffer + HEADLEN_30 + BODYLEN7004;
 	int i = 0;
 	for(; i < m ; i++)
@@ -186,23 +186,23 @@ int do7004(Send *S, struct user *p, Recv *R, void *c)
 
 }
 
-/******************************ç¼´è´¹ç¡®è®¤******************/
-//7005ä¸šåŠ¡ä¸»è¦è€ƒè™‘é”™è¯¯å¤„ç†é€»è¾‘
+/******************************½É·ÑÈ·ÈÏ******************/
+//7005ÒµÎñÖ÷Òª¿¼ÂÇ´íÎó´¦ÀíÂß¼­
 int do7005(Send *S, struct user *p, Recv *R, void *c)
 {
 	MYSQL *con = (MYSQL *)c;
 	char SQL[1024];
-	//å…ˆé”ä¸Š,é˜²æ­¢æ°´å‚å‰å°æ“ä½œ
+	//ÏÈËøÉÏ,·ÀÖ¹Ë®³§Ç°Ì¨²Ù×÷
 	sprintf(SQL,"update zlsqkb set cnje = (DATEDIFF( curdate(),cnjqsrq ) * (select cnjsl from zlscnjcsb)), pkbz = 1 where hh = %s and pkbz = 0", p->pwater->account);
 	Mysql_query(con, SQL);
 	if(mysql_affected_rows(con) <= 0)
 	{
 		
-		runlog("", 0, "æ­¤ç”¨æˆ·,æˆ–æ‰£æ¬¾è¢«é”å®š\n");
+		runlog("", 0, "´ËÓÃ»§,»ò¿Û¿î±»Ëø¶¨\n");
 		S->result = ERRORLOCK;
 		return;
 	}
-	/*è·å–æ¬ æ¬¾è´¦å•ä¿¡æ¯å¹¶å¯¹è´¦*/
+	/*»ñÈ¡Ç·¿îÕËµ¥ĞÅÏ¢²¢¶ÔÕË*/
 	sprintf(SQL,"SELECT sum(je + cnje) From zlsqkb WHERE Hh = %s ", p->pwater->account);
 	Mysql_query(con, SQL);
 	MYSQL_RES *result = Mysql_store_result(con);
@@ -212,7 +212,7 @@ int do7005(Send *S, struct user *p, Recv *R, void *c)
 		if( abs(p->pbank->table->money - atof(row[0])) > 0.01)
 		{
 			S->result = ERRORBOOK;
-			//æ­¤å¤„éœ€è¦å°†pkbzè¿˜åŸ
+			//´Ë´¦ĞèÒª½«pkbz»¹Ô­
 			sprintf(SQL,"update zlsqkb set cnje = (DATEDIFF( curdate(),cnjqsrq ) * (select cnjsl from zlscnjcsb)), pkbz = 0 where hh = %s ", p->pwater->account);
 			Mysql_query(con, SQL);
 			mysql_free_result(result);
@@ -226,10 +226,10 @@ int do7005(Send *S, struct user *p, Recv *R, void *c)
 	result = Mysql_store_result(con);
 	
 
-	//æ³¨æ„å›æ»š
+	//×¢Òâ»Ø¹ö
 	while((row = mysql_fetch_row(result)))
 	{
-		//æ’å…¥ç¼´è´¹å†²æ­£è¡¨
+		//²åÈë½É·Ñ³åÕı±í
 		sprintf(SQL,"INSERT INTO zlsjfczb(hh,Qkrq,je,Cnje,Cnjqsrq,jfczrq,lsh) values(%s,%s,%.2f,%.2f,%s,%s,%s)",row[0],row[1],atof(row[2]),atof(row[3]),row[4],p->pbank->table->date,p->pbank->table->order);
 		S->result = Mysql_query(con,SQL);
 		if(S->result != SUCCESS)
@@ -238,7 +238,7 @@ int do7005(Send *S, struct user *p, Recv *R, void *c)
 	mysql_free_result(result);
 
 	
-	//åˆ é™¤æ¬ æ¬¾è¡¨ç”¨æˆ·æ¡ç›®
+	//É¾³ıÇ·¿î±íÓÃ»§ÌõÄ¿
 	if(S->result == SUCCESS)
 	{
 		sprintf(SQL,"DELETE  From zlsqkb WHERE Hh = %s ", p->pwater->account);
@@ -251,12 +251,12 @@ int do7005(Send *S, struct user *p, Recv *R, void *c)
 	}
 }
 
-//å†²æ­£ä¸šåŠ¡
+//³åÕıÒµÎñ
 int do7006(Send *S, struct user *p, Recv *R, void *c)
 {
 	MYSQL *con = (MYSQL *)c;
 	char SQL[1024];
-	/*è·å–ç¼´è´¹è´¦å•ä¿¡æ¯*/
+	/*»ñÈ¡½É·ÑÕËµ¥ĞÅÏ¢*/
 	sprintf(SQL,"SELECT Hh,Qkrq,Je,Cnje,Cnjqsrq From zlsjfczb WHERE lsh = %s", p->pbank->table->order);
 	Mysql_query(con,SQL);
 	MYSQL_RES *result = Mysql_store_result(con);
@@ -285,7 +285,7 @@ int do7006(Send *S, struct user *p, Recv *R, void *c)
 	}
 }
 
-//å•ç¬”ç¼´è´¹å¯¹è´¦
+//µ¥±Ê½É·Ñ¶ÔÕË
 int do7007(Send *S, char *date, int count, float sum, Recv *R, void *c)
 {
 	MYSQL *con = (MYSQL *)c;
@@ -302,7 +302,7 @@ int do7007(Send *S, char *date, int count, float sum, Recv *R, void *c)
 	{
 		count_db++;
 		sum_db += atof(row[1]) + atof(row[2]);
-		//æš‚æ—¶åªå¯¹æ€»å¸
+		//ÔİÊ±Ö»¶Ô×ÜÕÊ
 	}
 	if(count_db != count || sum_db != sum)
 		S->result = ERRORBOOK;
@@ -312,7 +312,7 @@ int do7007(Send *S, char *date, int count, float sum, Recv *R, void *c)
 int do7008(Send *S, Recv *R, void *c)
 {
 	MYSQL *con = (MYSQL *)c;
-	//å…ˆé”ä¸Š,å¹¶è®¡ç®—æ»çº³é‡‘
+	//ÏÈËøÉÏ,²¢¼ÆËãÖÍÄÉ½ğ
 	char SQLPK[1024] = "update zlsqkb INNER JOIN zlsdab on zlsqkb.hh =zlsdab.hh  set pkbz = 1,Cnje = (DATEDIFF(curdate(),zlsqkb.cnjqsrq ) * (select cnjsl from zlscnjcsb)) where zlsdab.nzh != 0";
 	Mysql_query(con,SQLPK);
 
@@ -324,7 +324,7 @@ int do7008(Send *S, Recv *R, void *c)
 	MYSQL_ROW row;
 	float 	sum 	= 0 ;
 	int	count 	= mysql_num_rows(result);
-	/********************ç”Ÿæˆæ–‡ä»¶****/
+	/********************Éú³ÉÎÄ¼ş****/
 	int 	fd = 0;
 	FILE 	*fp;
 	char 	file[FILELEN] = {""};
@@ -339,7 +339,7 @@ int do7008(Send *S, Recv *R, void *c)
 
 	while((row = mysql_fetch_row(result)))
 	{
-		//æ»çº³é‡‘è®¡ç®—
+		//ÖÍÄÉ½ğ¼ÆËã
 		sum = atof(row[3]) + atof(row[4]);
 		fprintf(fp, "%-12.12s%-60.60s%-20.20s%-12.2f\n",row[0], row[1], row[2], sum );
 		sum = 0 ;
@@ -349,7 +349,7 @@ int do7008(Send *S, Recv *R, void *c)
 	fclose(fp);
 	mysql_free_result(result);
 	strncat(S->file, file, FILELEN);
-	/************æ–‡ä»¶ç”Ÿæˆå®Œæ¯•*****************************/
+	/************ÎÄ¼şÉú³ÉÍê±Ï*****************************/
 	S->filelen = count * LINE7008;
 }
 
@@ -358,7 +358,7 @@ int do7009(struct user *p, int res, void *c)
 	MYSQL *con = (MYSQL *)c;
 	int e_one, e_two, e_three;
 	char SQL[1024];
-	//æ‰£æ¬¾ä¸æˆåŠŸåˆ™å°†æ‰¹æ‰£å­—æ®µå›å¤è‡³0
+	//¿Û¿î²»³É¹¦Ôò½«Åú¿Û×Ö¶Î»Ø¸´ÖÁ0
 	if(res != 0)
 	{
 		sprintf(SQL,"update zlsqkb  set pkbz = 0 where hh = %s", p->pwater->account);

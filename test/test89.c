@@ -18,7 +18,10 @@
 #include <fcntl.h>
 #include <netdb.h>
 
+
+
 #define  closesocket            close
+#define  TCP_BLOCK     9056 
 
 typedef struct  {
   struct sockaddr_in sad;
@@ -34,12 +37,17 @@ typedef struct  {
 ==============================================================================*/
 main(int argc,char *argv[])
 {
-	int     sd,j;             /* socket descriptor */
+	if(argc < 2)
+	{
+		printf("testfile 8 批量扣款信息查询 9 批量扣款信息返回\n");
+	}
+		int     sd,j;             /* socket descriptor */
   	char    ydport[10];
 	char    ydhost[40];
 	char	sendbuf[1024];
 	char	buf[1024];
 	char	recvbuf[1024];
+	char	filelen[18+1];
 	int	len;
   	TCPPARMS tcpp;
         
@@ -48,63 +56,27 @@ main(int argc,char *argv[])
 	memset(sendbuf,0,sizeof(sendbuf));
 	memset(recvbuf,0,sizeof(recvbuf));
 	memset(buf,0,sizeof(buf));
-	      
-	if(argc<2)
-	{
-		printf("testcli 0 用户基本信息查询 1 银行扣款协议确认\n");
-		printf("testcli 2 银行扣款协议修改 3 银行扣款协议删除\n");
-		printf("testcli 4 缴费信息查询 5 缴费确认\n");
-		printf("testcli 6 冲正  7 单笔缴费对帐\n");
-		printf("testcli 8 批量扣款信息查询 9 批量扣款信息返回\n");
-		fflush(stdout);
-		exit(0);
-	}
+
+	char recvfile[] = { "7008recv" };
+	char sendfile[] = { "7009send" };
+	int i = 0;
 	switch(atoi(argv[1]))
 	{
-	case 0:
-		sprintf(sendbuf,"%-4.4s%-4.4s%-4.4s%-18.18s%-12.12s","0038","7000","","",argv[2]);
-		break;
-	case 1:
-		sprintf(sendbuf,"%-4.4s%-4.4s%-4.4s%-18.18s%-12.12s%-60.60s%-20.20s","0136","7001","","",argv[2],"张三",argv[3]);
-		break;
-	case 2:
-		sprintf(sendbuf,"%-4.4s%-4.4s%-4.4s%-18.18s%-12.12s%-60.60s%-20.20s","0136","7002","","",argv[2],"张三",argv[3]);
-		break;
-	case 3:
-		sprintf(sendbuf,"%-4.4s%-4.4s%-4.4s%-18.18s%-12.12s%-60.60s%-20.20s","0136","7003","","",argv[2],"张三",argv[3]);
-		break;
-	case 4:
-		sprintf(sendbuf,"%-4.4s%-4.4s%-4.4s%-18.18s%-12.12s","0038","7004","","",argv[2]);
-		break;
-	case 5:
-		sprintf(sendbuf,"%-4.4s%-4.4s%-4.4s%-18.18s%-12.12s%-60.60s%-60.60s%-12.12s%-16.16s%-8.8s","0212","7005","","",argv[2],"张三","织里镇农行","195.80","1000000000000001","20140308");
-		break;
-	case 6:
-		sprintf(sendbuf,"%-4.4s%-4.4s%-4.4s%-18.18s%-12.12s%-60.60s%-60.60s%-12.12s%-16.16s%-8.8s","0212","7006","","",argv[2],"张三","织里镇农行","101.01","1000000000000001","20140308");
-		break;
-	case 7:
-		sprintf(sendbuf,"%-4.4s%-4.4s%-4.4s%18.18s%-8.8s%-6.6s%-12.12s\
-%-12.12s%-60.60s%-60.60s%-12.12s%-16.16s%-8.8s\n%-12.12s%-60.60s%-60.60s%-12.12s%-16.16s%-8.8s\n",
-				"0052","7007","","374","20140325","1","12.21"
-				,"11111111111","张三","织里镇农行","101.01","1000000000000001","20140308"
-				,"22222222222","李四","织里镇农行","233.01","1000000000000001","20140308");
-		break;
-	case 8:
-		sprintf(sendbuf,"%-4.4s%-4.4s%-4.4s%-18.18s","0038","7008","","");
-		break;
-	case 9:
-		sprintf(sendbuf,"%-4.4s%-4.4s%-4.4s%-18.18s","0038","7009","","111.txt");
-		break;
-	default:
-		printf("无此交易\n");
-		exit(0);
+		case 8:
+			sprintf(sendbuf,"%-4.4s%-4.4s%-4.4s%-18.18s","0026","7008","","");
+			break;
+		case 9:
+			i =  productext(recvfile, sendfile);
+			sprintf(sendbuf,"%-4.4s%-4.4s%-4.4s%-18.18d","0026","7009","",i);
+			break;
+		default:
+			exit(0);
 	}
-        printf("Send %d bytes[%s]\n", strlen(sendbuf), sendbuf);
-runlog(__FILE__,__LINE__,"sendbuf=[%s]\n",sendbuf);
+	      
+	runlog(__FILE__,__LINE__,"sendbuf=[%s]\n",sendbuf);
 	//设置服务端ip地址、端口号
-	//strcpy(ydhost,"172.20.7.61");
-	strcpy(ydhost,"127.0.0.1");
-	strcpy(ydport,"9005");
+	strcpy(ydhost,"172.20.8.206");
+	strcpy(ydport,"443");
         if(tcp_init(atoi(ydport),ydhost,&tcpp) < 0){
         	printf("TCP初始化失败!\n");
         	return -1;
@@ -114,27 +86,31 @@ runlog(__FILE__,__LINE__,"sendbuf=[%s]\n",sendbuf);
 	      closesocket(sd);
               return -1;
         }
-       	if(writen(sd,sendbuf,sizeof(sendbuf)) < sizeof(sendbuf)){
+       	if(writen(sd,sendbuf,strlen(sendbuf)) < strlen(sendbuf)){
               printf("TCP发送报文失败!\n");
               closesocket(sd);
               return -1;
         }
 
-	char recvlen[4]	= {""};
-        if(readn(sd,recvlen,4)<0){/*失败*/
-              printf("TCP接收报文失败![%d]\n",len);
-              closesocket(sd);
-              return -1;
-        };
-	len = atoi(recvlen);
-        if(readn(sd,recvbuf,len)<0){/*失败*/
-              printf("TCP接收报文失败![%d]\n",len);
-              closesocket(sd);
-              return -1;
+	//接受文件
+	switch(atoi(argv[1]))
+	case 8:
+	{
+        	if(readn(sd,recvbuf,30)<0){/*失败*/
+              		printf("TCP接收报文失败![%d]\n",len);
+              		closesocket(sd);
+              		return -1;
+		}
+		sprintf(filelen,"%18.18s",recvbuf+12);
+		recvtext(sd,"7008recv",filelen);	
+		break;
+	case 9:
+ 		sendtext(sd, sendfile, i);
+		break;
 	}
+
 	closesocket(sd);
-	printf("Receive %d bytes [%s%s]\n", strlen(recvbuf)+4 , recvlen, recvbuf);
-	runlog(__FILE__,__LINE__,"recvbuf=[%s%s]\n", recvlen, recvbuf);
+runlog(__FILE__,__LINE__,"recvbuf=[%s]\n",recvbuf);
 	return 0;
 
 } /*main*/
@@ -155,7 +131,7 @@ int tcp_init(int port,char *hostNameOrIP,TCPPARMS *tcpp)
     	memset((char *)&sad,0,sizeof(sad));
 
     /**** Map TCP tranbsport protocol name to protocol number*****/
-    	if (((ptrp= getprotobyname("tcp"))) == NULL) {
+    	if (((int)(ptrp= getprotobyname("tcp"))) == 0) {
 		perror("不能将\"tcp\"映射到协议号");
 		return (-1);
     		}
@@ -253,4 +229,91 @@ int	total;
 		}
 	return(total);
 }
+
+int productext(char *src, char *dest)
+{
+	FILE	*frp, *fwp;
+	frp = fopen(src,"r");
+	fwp = fopen(dest,"w");
+	if(frp == NULL || fwp == NULL)
+	{
+		fprintf(stderr, "无法打开文件!\n");
+		return;
+	}
+	int i;
+	char buf[104];
+	char a[11] = {"2014032800\n"};
+	char ch = fgetc(frp);
+	while(ch != EOF)
+	{
+		if(ch != '\n')
+			fputc(ch, fwp);
+		else
+		{
+			fwrite(a, 1, 11, fwp);
+		}
+		ch = fgetc(frp);
+	}
+	int len = ftell(fwp);
+	fclose(frp);
+	fclose(fwp);
+	printf("文件长度:%d\n",len );
+	return len;
+}
 			
+/*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*/
+//	函数名:recvtext
+//	  功能: 接收文本
+//        参数: "sd" -软插座描述符  "name"--文件名  "len"--文件长度
+//	  返回: '0'--成功  其它--失败
+/*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*/
+ recvtext(int sd,char name[16],char len[20])
+ {
+ FILE 	*fp;
+ char 	recvbuf[1280];
+ int 	i,count,fsize;
+
+  	fp=fopen(name,"w");
+  	if(fp==NULL)return(-2); 
+  	count=atoi(len)/TCP_BLOCK;
+  	fsize=atoi(len)%TCP_BLOCK;
+  	for(i=0;i<count;i++)
+		{
+  		readn(sd,recvbuf,TCP_BLOCK);
+		fwrite(recvbuf,1,TCP_BLOCK,fp);
+		}
+  	if(fsize >0){
+		readn(sd,recvbuf,fsize);	
+		fwrite(recvbuf,1,fsize,fp);
+		}
+  	fclose(fp);
+  	return 0;
+ 	}
+
+/*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*/
+//	函数名:sendtext
+//	  功能: 发送文本
+//        参数:sd--软插座描述符 fname--文件名
+//	  返回:
+/*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*/
+ sendtext(int sd,char fname[16], int len)
+ {
+  FILE 	*fp;
+  char 	sendbuf[1280];
+  char 	buf[128];
+  int 	i,count,fsize;
+
+  	if((fp=fopen(fname,"r"))==NULL){
+			printf("打开传送文件%s失败!",fname);
+			fflush(stdout);
+			return(-2); 
+			}
+  	for(i=0;;i++)
+		{
+		if(fread(sendbuf,1,len,fp)<1)break;
+  		writen(sd,sendbuf,len);
+		}
+  	fclose(fp);
+  	return 0;
+ }
+

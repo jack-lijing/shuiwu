@@ -1,39 +1,45 @@
-#include "water.h"
-#include "csapp.h"
-
-void echo(int conn, void *dbcon)
+#include	"csapp.h"
+#include	"water.h"
+void protocol(int conn, void *dbcon)
 {
-	/********************åˆå§‹åŒ–å­˜å‚¨ç»“æ„****/
-	Recv 	R 	= {{}, 0, 0, 0};
+	/********************³õÊ¼»¯´æ´¢½á¹¹****/
+	Recv 	R 	= {{""}, 0, 0, 0};
+	Send	S	= {{""}, HEADLEN_26 , SUCCESS, "", 0};
+	struct 	water 	winfo	= { "", 0.0, 0, Calloc(MONTHNUM,sizeof(struct bill) )} ;			//Ë®·ÑÕË»§/
+	struct 	bank 	binfo	= { "", 0.0, Calloc(1,sizeof(struct pay))};					//ÒøĞĞÕË»§ 
+	struct 	user 	person 	= { "", "", &winfo, &binfo };							//ÓÃ»§ĞÅÏ¢
+	char *pbrecv;
+	char buf[ HEADLEN_30 +1];
 	memset( R.buffer, 0 , sizeof(R.buffer));
-	Send	S	= {{}, HEADLEN_26 , SUCCESS, "", 0};
 	memset( S.buffer, 0 , sizeof(S.buffer));
 	memset( S.file, 0 , sizeof(S.file));
-	struct 	water 	winfo	= { "", 0.0, 0, Calloc(MONTHNUM,sizeof(struct bill) )} ;			//æ°´è´¹è´¦æˆ·/
-	struct 	bank 	binfo	= { "", 0.0, Calloc(1,sizeof(struct pay))};					//é“¶è¡Œè´¦æˆ· 
-	struct 	user 	person 	= { "", "", &winfo, &binfo };							//ç”¨æˆ·ä¿¡æ¯
-	/*****	**************åˆå§‹åŒ–ç»“æŸ**********/
+	
+	/*****	**************³õÊ¼»¯½áÊø**********/
 
-	/********	è¯»å…¥æŠ¥æ–‡å¤´å¹¶æ ¼å¼åŒ–	****/
-	if (Rio_readn(conn, R.buffer, HEADLEN_30) < HEADLEN_30)		//è¯»å…¥30é•¿åº¦æŠ¥æ–‡å¤´
+	/********	¶ÁÈë±¨ÎÄÍ·²¢¸ñÊ½»¯	****/
+	if (Rio_readn(conn, R.buffer, HEADLEN_30) < HEADLEN_30)		//¶ÁÈë30³¤¶È±¨ÎÄÍ·
 	{
-		runlog("", 0, "æŠ¥æ–‡é•¿åº¦<30,å‡ºé”™");
-		printf("æŠ¥æ–‡å¤´é•¿åº¦ < 30, æ— æ­¤æ ¼å¼!\n");
+		runlog("", 0, " the length of protocol <30 bytes, Error");
+#ifdef DEBUG
+		printf("the length of protocal  < 30 bytes, Error!\n");
+#endif
 		return;
 	}
-	char res[5];
-	sscanf(R.buffer, RECVHEAD, &R.len, &R.code, &R.filelen);	//å¡«å……æŠ¥æ–‡å¤´ç»“æ„
 
-	/*******	è¯»å…¥æŠ¥æ–‡ä½“		*****/
-	char 	*pbrecv = R.buffer + 30;				//æŒ‡å‘æŠ¥æ–‡ä½“
-	Rio_readn(conn, pbrecv, R.len - 26);				//è¯»å–æŠ¥æ–‡ä¸»ä½“
+	sscanf(R.buffer, RECVHEAD, &R.len, &R.code, &R.filelen);	//Ìî³ä±¨ÎÄÍ·½á¹¹
+
+	/*******	¶ÁÈë±¨ÎÄÌå		*****/
+	pbrecv = R.buffer + 30;				//Ö¸Ïò±¨ÎÄÌå
+	Rio_readn(conn, pbrecv, R.len - 26);				//¶ÁÈ¡±¨ÎÄÖ÷Ìå
+#ifdef DEBUG
 	printf("server receive %d bytes\n%s\n" , strlen(R.buffer), R.buffer);
+#endif
 	runlog("", 0, "Recv=[%s]\n", R.buffer);
 
 	switch(R.code){
 		case	7000:
 			S.len = SLEN7000;
-			sscanf(pbrecv, RFORMAT7000, person.pwater->account );	//è·å–ç”¨æˆ·ç¼–å·
+			sscanf(pbrecv, RFORMAT7000, person.pwater->account );	//»ñÈ¡ÓÃ»§±àºÅ
 			do7000(&S, &person, &R, dbcon);
 			break;
 		case	7001:
@@ -60,7 +66,7 @@ void echo(int conn, void *dbcon)
 		case	7004:
 			sscanf(pbrecv, RFORMAT7004 , person.pwater->account);
 			do7004(&S, &person, &R, dbcon);
-		 	S.len = HEADLEN_26 + BODYLEN7004 + person.pwater->months*30;		 // 30 = 2(æœˆä»½) + 12(é‡‘é¢) + 12(æ»çº³é‡‘)
+		 	S.len = HEADLEN_26 + BODYLEN7004 + person.pwater->months*30;		 // 30 = 2(ÔÂ·İ) + 12(½ğ¶î) + 12(ÖÍÄÉ½ğ)
 			break;
 		case	7005:
 			sscanf(pbrecv, RFORMAT7005, 
@@ -87,25 +93,31 @@ void echo(int conn, void *dbcon)
 				char	date[9] = {""};
 				int	count	= 0;
 				float	sum	= 0;
-				sscanf(pbrecv, RFORMAT7007, date,  &count, &sum);
-				do7007(&S, date, count, sum, &R, dbcon);
-				//æ¥å—é“¶è¡Œè¯¦ç»†å¯¹è´¦è´¦å•,å¹¶å†™å…¥æ–‡æœ¬
 				FILE *fp;
 				char file[30] = {""};
-				sprintf(file,"./æ¯æ—¥å¯¹è´¦%s", GetSysDate(1));
+				char usrbuf[170] = {""};	//170ÎªÒ»Ìõ¼ÇÂ¼µÄ³¤¶È,°üº¬\n + \0
+				int num = R.filelen / 169;
+
+				sscanf(pbrecv, RFORMAT7007, date,  &count, &sum);
+				do7007(&S, date, count, sum, &R, dbcon);
+				//½ÓÊÜÒøĞĞÏêÏ¸¶ÔÕËÕËµ¥,²¢Ğ´ÈëÎÄ±¾
+				
+
+				sprintf(file,"./7-%s.txt", GetSysDate(1));
 				if((fp = fopen(file, "w")) == NULL)
 				{
 					S.result = ERRORFILE;
 					break;
 				}
-				char usrbuf[187] = {""};	//187ä¸ºä¸€æ¡è®°å½•çš„é•¿åº¦,åŒ…å«\n
-				int num = R.filelen / sizeof(usrbuf);
+
+
 				while(num > 0 )
 				{
 					num--;
-					int n = Rio_readn(conn, usrbuf, sizeof(usrbuf));
 					//printf("server receive %d bytes %s\n",n,usrbuf);
-					Rio_writen(fileno(fp), usrbuf, n);
+					//Rio_writen(fileno(fp), usrbuf, Rio_readn(conn, usrbuf, sizeof(usrbuf)));
+					Rio_readn(conn, usrbuf, sizeof(usrbuf)-1);
+					fputs(usrbuf,fp);
 				}
 				fclose(fp);
 			}
@@ -116,8 +128,8 @@ void echo(int conn, void *dbcon)
 		case	7009:
 			{
 				char 	line[115];
-				int	res = 0;			//00ä»£è¡¨é“¶è¡Œæ‰£æ¬¾æˆåŠŸ,99ä»£ç æ‰£æ¬¾å¤±è´¥
-				//è¯»å–æ¯ä¸€è¡Œè®°å½•,å¦‚æ‰£æ¬¾æˆåŠŸ,åˆ™å°†æ¬ æ¬¾è¡¨è®°å½•ç§»è‡³ç¼´è´¹è¡¨
+				int	res = 0;			//00´ú±íÒøĞĞ¿Û¿î³É¹¦,99´úÂë¿Û¿îÊ§°Ü
+				//¶ÁÈ¡Ã¿Ò»ĞĞ¼ÇÂ¼,Èç¿Û¿î³É¹¦,Ôò½«Ç·¿î±í¼ÇÂ¼ÒÆÖÁ½É·Ñ±í
 				while(Rio_readn(conn, line, sizeof(line)))
 				{
 					sscanf(line, "%12s%60s%20s%12f%8s%2d", 
@@ -139,43 +151,31 @@ void echo(int conn, void *dbcon)
 			break;
 	}
 
-	//sprintfä¼šåœ¨ç»“å°¾+NULL, æ•…ä½¿ç”¨memcpyå°†æŠ¥æ–‡å¤´æ‹·è´è‡³Bufferä¸­
-	//PS sprintfå‡½æ•°ä¸å®‰å…¨,å¯èƒ½å‘ç”Ÿç¼“å†²åŒºæº¢å‡º,å»ºè®®é€‰ç”¨snprintf
-	char buf[ HEADLEN_30 +1];
-	snprintf(buf, HEADLEN_30+1 ,SENDHEAD, S.len , R.code, S.result, S.filelen);
+	//sprintf»áÔÚ½áÎ²+NULL, ¹ÊÊ¹ÓÃmemcpy½«±¨ÎÄÍ·¿½±´ÖÁBufferÖĞ
+	//PS sprintfº¯Êı²»°²È«,¿ÉÄÜ·¢Éú»º³åÇøÒç³ö,½¨ÒéÑ¡ÓÃsnprintf
+
+	sprintf(buf,SENDHEAD, S.len , R.code, S.result, S.filelen);
 	memcpy(S.buffer, buf, HEADLEN_30);
 
 
+#ifdef DEBUG
 	printf("server send %d bytes(strlen)\n%s\n", strlen(S.buffer), S.buffer);
+#endif
 	runlog("", 0, "Send=[%s]\n",S.buffer);
-	Rio_writen(conn, S.buffer, S.len + 4);		//å‘é€å®é™…åŒ…é•¿åº¦ä¸ºS.len + 4
+	Rio_writen(conn, S.buffer, S.len + 4);		//·¢ËÍÊµ¼Ê°ü³¤¶ÈÎªS.len + 4
 
-	/****** å¦‚æœæ˜¯7008ä¸šåŠ¡ï¼Œå‘é€æ‰¹é‡æ‰£æ¬¾ä¿¡æ¯ ************************/
+	/****** Èç¹ûÊÇ7008ÒµÎñ£¬·¢ËÍÅúÁ¿¿Û¿îĞÅÏ¢ ************************/
 	if(strlen(S.file) > 0)
 	{
 		FILE 	*fp 	= fopen(S.file,"r");
 		int 	fd 	= fileno(fp);
 		rio_t	fio;
-		rio_readinitb(&fio, fd);
 		char 	buf[MAXLINE];
 		int 	nread;
+		rio_readinitb(&fio, fd);
 		while((nread = Rio_readlineb(&fio, buf, MAXLINE ))!=0)
 			Rio_writen(conn, buf, nread);
 	}
 	Free(person.pbank->table);
 	Free(person.pwater->table);
-
 }
-
-/*
-void *thread(void *vargp)
-{
-	int connfd = *((int *) vargp);
-	Pthread_detach(pthread_self());
-	Free(vargp);
-	echo(connfd);
-	Close(connfd);
-	return NULL;
-}
-*/
-
