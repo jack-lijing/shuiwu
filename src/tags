@@ -16,12 +16,12 @@ COUNTLEN	water.h	9;"	d
 Calloc	csapp.c	/^void *Calloc(size_t number, size_t size)$/;"	f
 Close	csapp.c	/^void Close(int connfd)$/;"	f
 DATE	water.h	7;"	d
-DB_close	do-stub.c	/^void DB_close(void *con)$/;"	f
 DB_close	do_mysql.c	/^void DB_close(void *con)$/;"	f
-DB_init	do-stub.c	/^void *DB_init()$/;"	f
+DB_close	do_stub.c	/^void DB_close(void *con)$/;"	f
 DB_init	do_mysql.c	/^void *DB_init()$/;"	f
-DB_real_connect	do-stub.c	/^void DB_real_connect(void *dbcon)$/;"	f
+DB_init	do_stub.c	/^void *DB_init()$/;"	f
 DB_real_connect	do_mysql.c	/^void DB_real_connect(void *dbcon)$/;"	f
+DB_real_connect	do_stub.c	/^void DB_real_connect(void *dbcon)$/;"	f
 ERRORBOOK	water.h	18;"	d
 ERRORDB	water.h	19;"	d
 ERRORFILE	water.h	20;"	d
@@ -34,9 +34,9 @@ GetSysDate	csapp.c	/^char *GetSysDate(int i)$/;"	f
 HEADLEN_26	water.h	11;"	d
 HEADLEN_30	water.h	10;"	d
 LINE7008	water.h	14;"	d
-LINUX	csapp.h	5;"	d
-LISTENQ	csapp.h	36;"	d
-MAXLINE	csapp.h	35;"	d
+LINUX	csapp.h	6;"	d
+LISTENQ	csapp.h	37;"	d
+MAXLINE	csapp.h	36;"	d
 MONTHNUM	water.h	12;"	d
 MSDOS	main_dos.c	1;"	d	file:
 Malloc	csapp.c	/^void *Malloc(size_t size)$/;"	f
@@ -57,7 +57,7 @@ RFORMAT7006	water.h	39;"	d
 RFORMAT7007	water.h	40;"	d
 RFORMAT7008	water.h	41;"	d
 RFORMAT7009	water.h	42;"	d
-RIO_BUFSIZE	csapp.h	34;"	d
+RIO_BUFSIZE	csapp.h	35;"	d
 Recv	water.h	/^}Recv;$/;"	t	typeref:struct:__anon2
 Rio_read	csapp.c	/^static ssize_t Rio_read(rio_t *rp, char *usrbuf, size_t n)$/;"	f	file:
 Rio_readinitb	csapp.c	/^void Rio_readinitb(rio_t *rp, int fd)$/;"	f
@@ -89,26 +89,26 @@ buffer	water.h	/^	char	buffer[BUFLEN];		\/\/发送报文缓存区$/;"	m	struct:__anon3
 code	water.h	/^	int	code;				\/\/接受报文编码$/;"	m	struct:__anon2
 date	water.h	/^	char	date[7]; 			\/\/账单日期$/;"	m	struct:bill
 date	water.h	/^	char	date[9]; 				\/\/账单日期$/;"	m	struct:pay
-do7000	do-stub.c	/^int do7000(Send *S, struct user *p, Recv *R ,void *c)$/;"	f
 do7000	do_mysql.c	/^int do7000(Send *S, struct user *p, Recv *R ,void *c)$/;"	f
-do7001	do-stub.c	/^int do7001(Send *S, struct user *p, Recv *R, void *c)$/;"	f
+do7000	do_stub.c	/^int do7000(Send *S, struct user *p, Recv *R ,void *c)$/;"	f
 do7001	do_mysql.c	/^int do7001(Send *S, struct user *p, Recv *R, void *c)$/;"	f
-do7002	do-stub.c	/^int do7002(Send *S, struct user *p, Recv *R, void *c)$/;"	f
+do7001	do_stub.c	/^int do7001(Send *S, struct user *p, Recv *R, void *c)$/;"	f
 do7002	do_mysql.c	/^int do7002(Send *S, struct user *p, Recv *R, void *c)$/;"	f
-do7003	do-stub.c	/^int do7003(Send *S, struct user *p, Recv *R, void *c)$/;"	f
+do7002	do_stub.c	/^int do7002(Send *S, struct user *p, Recv *R, void *c)$/;"	f
 do7003	do_mysql.c	/^int do7003(Send *S, struct user *p, Recv *R, void *c)$/;"	f
-do7004	do-stub.c	/^int do7004(Send *S, struct user *p, Recv *R, void *c)$/;"	f
+do7003	do_stub.c	/^int do7003(Send *S, struct user *p, Recv *R, void *c)$/;"	f
 do7004	do_mysql.c	/^int do7004(Send *S, struct user *p, Recv *R, void *c)$/;"	f
-do7005	do-stub.c	/^int do7005(Send *S, struct user *p, Recv *R, void *c)$/;"	f
+do7004	do_stub.c	/^int do7004(Send *S, struct user *p, Recv *R, void *c)$/;"	f
 do7005	do_mysql.c	/^int do7005(Send *S, struct user *p, Recv *R, void *c)$/;"	f
-do7006	do-stub.c	/^int do7006(Send *S, struct user *p, Recv *R, void *c)$/;"	f
+do7005	do_stub.c	/^int do7005(Send *S, struct user *p, Recv *R, void *c)$/;"	f
 do7006	do_mysql.c	/^int do7006(Send *S, struct user *p, Recv *R, void *c)$/;"	f
-do7007	do-stub.c	/^int do7007(Send *S, char *date, int count, float sum, Recv *R, void *c)$/;"	f
+do7006	do_stub.c	/^int do7006(Send *S, struct user *p, Recv *R, void *c)$/;"	f
 do7007	do_mysql.c	/^int do7007(Send *S, char *date, int count, float sum, Recv *R, void *c)$/;"	f
-do7008	do-stub.c	/^int do7008(Send *S, Recv *R, void *c)$/;"	f
+do7007	do_stub.c	/^int do7007(Send *S, char *date, int count, float sum, Recv *R, void *c)$/;"	f
 do7008	do_mysql.c	/^int do7008(Send *S, Recv *R, void *c)$/;"	f
-do7009	do-stub.c	/^int do7009(struct user *p, int res, void *c)$/;"	f
+do7008	do_stub.c	/^int do7008(Send *S, Recv *R, void *c)$/;"	f
 do7009	do_mysql.c	/^int do7009(struct user *p, int res, void *c)$/;"	f
+do7009	do_stub.c	/^int do7009(struct user *p, int res, void *c)$/;"	f
 file	water.h	/^	char	file[FILELEN];		\/\/发送文本名称$/;"	m	struct:__anon3
 filelen	water.h	/^	int	filelen;			\/\/记录附加文件长度$/;"	m	struct:__anon2
 filelen	water.h	/^	int	filelen;		\/\/接受报文编码$/;"	m	struct:__anon3
@@ -143,7 +143,7 @@ rio_readnb	csapp.c	/^ssize_t rio_readnb(rio_t *rp, void *usrbuf, size_t n)$/;"	f
 rio_t	csapp.h	/^}rio_t;$/;"	t	typeref:struct:__anon1
 rio_writen	csapp.c	/^ssize_t rio_writen(int fd, void *userbuf, size_t n)$/;"	f
 runlog	csapp.c	/^int runlog(char * file, int line, char * msg, ...)$/;"	f
-ssize_t	csapp.h	11;"	d
+ssize_t	csapp.h	12;"	d
 table	water.h	/^	struct		pay	*table;		\/\/当日已付账单明细$/;"	m	struct:bank	typeref:struct:bank::pay
 table	water.h	/^	struct	bill	*table;			\/\/应收月份明细$/;"	m	struct:water	typeref:struct:water::bill
 tax	water.h	/^	float	tax;				\/\/滞纳金$/;"	m	struct:bill

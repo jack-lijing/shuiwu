@@ -146,6 +146,7 @@ int do7004(Send *S, struct user *p, Recv *R, void *c)
 	S->result = Mysql_query(con, SQL);
 	if(S->result == ERRORDB)
 	{
+		memset(S->buffer, '0', 178);
 		return;
 	}
 
@@ -251,8 +252,7 @@ int do7005(Send *S, struct user *p, Recv *R, void *c)
 	}
 }
 
-//冲正业务
-int do7006(Send *S, struct user *p, Recv *R, void *c)
+//冲正业务nt do7006(Send *S, struct user *p, Recv *R, void *c)
 {
 	MYSQL *con = (MYSQL *)c;
 	char SQL[1024];

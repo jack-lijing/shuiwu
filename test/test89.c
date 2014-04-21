@@ -75,8 +75,10 @@ main(int argc,char *argv[])
 	      
 	runlog(__FILE__,__LINE__,"sendbuf=[%s]\n",sendbuf);
 	//设置服务端ip地址、端口号
-	strcpy(ydhost,"172.20.8.206");
-	strcpy(ydport,"443");
+	//strcpy(ydhost,"172.20.8.206");
+	//strcpy(ydport,"443");
+	strcpy(ydhost,"127.0.0.1");
+	strcpy(ydport,"9005");
         if(tcp_init(atoi(ydport),ydhost,&tcpp) < 0){
         	printf("TCP初始化失败!\n");
         	return -1;

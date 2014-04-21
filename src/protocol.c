@@ -67,6 +67,7 @@ void protocol(int conn, void *dbcon)
 			sscanf(pbrecv, RFORMAT7004 , person.pwater->account);
 			do7004(&S, &person, &R, dbcon);
 		 	S.len = HEADLEN_26 + BODYLEN7004 + person.pwater->months*30;		 // 30 = 2(月份) + 12(金额) + 12(滞纳金)
+			
 			break;
 		case	7005:
 			sscanf(pbrecv, RFORMAT7005, 
@@ -168,13 +169,9 @@ void protocol(int conn, void *dbcon)
 	if(strlen(S.file) > 0)
 	{
 		FILE 	*fp 	= fopen(S.file,"r");
-		int 	fd 	= fileno(fp);
-		rio_t	fio;
-		char 	buf[MAXLINE];
-		int 	nread;
-		rio_readinitb(&fio, fd);
-		while((nread = Rio_readlineb(&fio, buf, MAXLINE ))!=0)
-			Rio_writen(conn, buf, nread);
+		char ch;
+		while((ch = fgetc(fp)) != EOF)
+			Rio_writen(conn,&ch,1);
 	}
 	Free(person.pbank->table);
 	Free(person.pwater->table);
