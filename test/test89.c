@@ -77,7 +77,7 @@ main(int argc,char *argv[])
 	//设置服务端ip地址、端口号
 	//strcpy(ydhost,"172.20.8.206");
 	//strcpy(ydport,"443");
-	strcpy(ydhost,"127.0.0.1");
+	strcpy(ydhost,"192.168.8.205");
 	strcpy(ydport,"9005");
         if(tcp_init(atoi(ydport),ydhost,&tcpp) < 0){
         	printf("TCP初始化失败!\n");
@@ -276,13 +276,14 @@ int productext(char *src, char *dest)
  int 	i,count,fsize;
 
   	fp=fopen(name,"w");
+	int l = atoi(len);	
   	if(fp==NULL)return(-2); 
-  	count=atoi(len)/TCP_BLOCK;
-  	fsize=atoi(len)%TCP_BLOCK;
+  	count=l/1280;
+  	fsize=l%1280;
   	for(i=0;i<count;i++)
 		{
-  		readn(sd,recvbuf,TCP_BLOCK);
-		fwrite(recvbuf,1,TCP_BLOCK,fp);
+  		readn(sd,recvbuf,1280);
+		fwrite(recvbuf,1,1280,fp);
 		}
   	if(fsize >0){
 		readn(sd,recvbuf,fsize);	
@@ -301,7 +302,7 @@ int productext(char *src, char *dest)
  sendtext(int sd,char fname[16], int len)
  {
   FILE 	*fp;
-  char 	sendbuf[1280];
+  char 	sendbuf[128000];
   char 	buf[128];
   int 	i,count,fsize;
 

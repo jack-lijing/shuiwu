@@ -105,8 +105,8 @@ runlog(__FILE__,__LINE__,"sendbuf=[%s]\n",sendbuf);
 	//strcpy(ydhost,"172.20.7.61");
 	//strcpy(ydhost,"127.0.0.1");
 	//strcpy(ydport,"9005");
-	strcpy(ydhost,"172.20.8.206");
-	strcpy(ydport,"443");
+	strcpy(ydhost,"192.168.8.205");
+	strcpy(ydport,"9005");
         if(tcp_init(atoi(ydport),ydhost,&tcpp) < 0){
         	printf("TCP³õÊ¼»¯Ê§°Ü!\n");
         	return -1;
