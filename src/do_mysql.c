@@ -253,6 +253,7 @@ int do7005(Send *S, struct user *p, Recv *R, void *c)
 }
 
 //ณๅีýาตฮ๑nt do7006(Send *S, struct user *p, Recv *R, void *c)
+int do7006(Send *S, struct user *p, Recv *R, void *c)
 {
 	MYSQL *con = (MYSQL *)c;
 	char SQL[1024];

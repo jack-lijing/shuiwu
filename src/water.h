@@ -1,3 +1,5 @@
+#define DEBUG
+
 #define	FILELEN	20
 #define	NAMELEN	60
 #define	ADDRLEN	60
