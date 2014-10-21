@@ -5,7 +5,7 @@ all:server test
 server:
 	cd src; make;cd ..
 test:
-	cd test; make
+	cd test; make;cd ..
 clean:
-	rm [7,8,9,l]* server;cd test;make clean
+	find ./ | egrep -v "src|Makefile|test|\.git" | xargs rm;cd test;make clean
 

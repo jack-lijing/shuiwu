@@ -25,7 +25,7 @@
 
 
 
-#define	SLEN7000	176	//7000业务响应报文长度#
+#define	SLEN7000	162//7000业务响应报文长度#
 #define	BODYLEN7004	 WACCLEN + NAMELEN + ADDRLEN + BILLTOT +COUNTLEN
 
 #define SENDHEAD	"%-4.4d%-4.4d%-4.4d%-18.18d"	
@@ -33,9 +33,9 @@
 #define SBODY7004	"%-12.12s%-60.60s%-60.60s%-12.2f%-4.4d"	
 
 #define RFORMAT7000	"%12s"
-#define RFORMAT7001	"%12s%60s%20s"
-#define RFORMAT7002	"%12s%60s%20s"
-#define RFORMAT7003	"%12s%60s%20s"
+#define RFORMAT7001	"%12s%60s%60s%20s"
+#define RFORMAT7002	"%12s%60s%60s%20s"
+#define RFORMAT7003	"%12s%60s%60s%20s"
 #define RFORMAT7004	"%12s"
 #define RFORMAT7005	"%12s%60s%60s%12f%16s%8s"
 #define	RFORMAT7006	"%12s%60s%60s%12f%16s%8s"
@@ -52,6 +52,7 @@ typedef struct	{
 	int	len;				//接受报文长度,比实际长度-4
 	int	code;				//接受报文编码
 	int	filelen;			//记录附加文件长度
+	int	conn;				//连接描述符
 }Recv;
 
 //发送报文结构体
@@ -61,6 +62,7 @@ typedef struct{
 	int	result;			//发送报文结果编码
 	char	file[FILELEN];		//发送文本名称
 	int	filelen;		//接受报文编码
+	int	conn;			//连接描述符
 }Send;
 
 //	用户信息
@@ -136,4 +138,6 @@ int do7009(struct user *p, int res, void *c);
 	如果出错return -1
  */
 
-void 	protocol(int connfd, void *con);
+int	readreq(int con, char *recv);
+int 	doreq(Recv *R, Send *S, void *con);
+int	sendresp(Recv *R, Send *S);

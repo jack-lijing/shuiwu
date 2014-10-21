@@ -27,7 +27,21 @@ int main(int argc, char *argv[])
 	while (1)
 	{
 		connfd = Accept(listenfd, (SA *)&clientaddr, &clientlen);
-		protocol(connfd, dbcon);
+	/********************初始化存储结构****/
+		Recv 	R 	= {{""}, 0, 0, 0, connfd};
+		Send	S	= {{""}, HEADLEN_26 , SUCCESS, "", 0, connfd};
+		memset( R.buffer, 0 , sizeof(R.buffer));
+		memset( S.buffer, 0 , sizeof(S.buffer));
+		memset( S.file, 0 , sizeof(S.file));
+	
+	//	Rio_readinitb(&rio, connfd);
+
+	//	int n = Rio_read(&rio, recv, MAXLINE );
+		if(!readreq(connfd, R.buffer))
+		{
+			doreq(&R, &S, dbcon);
+			writeresp(&R, &S);
+		}
 		Close(connfd);
 	}
 	DB_close(dbcon);

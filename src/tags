@@ -4,59 +4,60 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-ADDRLEN	water.h	3;"	d
+ADDRLEN	water.h	5;"	d
 Accept	csapp.c	/^int Accept(int listenfd, struct sockaddr *addr, int* addrlen)$/;"	f
-BACCLEN	water.h	5;"	d
-BILLFORMAT	water.h	44;"	d
-BILLTOT	water.h	8;"	d
-BODYLEN7004	water.h	27;"	d
-BUFLEN	water.h	46;"	d
+BACCLEN	water.h	7;"	d
+BILLFORMAT	water.h	46;"	d
+BILLTOT	water.h	10;"	d
+BODYLEN7004	water.h	29;"	d
+BUFLEN	water.h	48;"	d
 Bind	csapp.c	/^void Bind(int sockfd, struct sockaddr *my_addr, int addrlen)$/;"	f
-COUNTLEN	water.h	9;"	d
+COUNTLEN	water.h	11;"	d
 Calloc	csapp.c	/^void *Calloc(size_t number, size_t size)$/;"	f
 Close	csapp.c	/^void Close(int connfd)$/;"	f
-DATE	water.h	7;"	d
+DATE	water.h	9;"	d
 DB_close	do_mysql.c	/^void DB_close(void *con)$/;"	f
 DB_close	do_stub.c	/^void DB_close(void *con)$/;"	f
 DB_init	do_mysql.c	/^void *DB_init()$/;"	f
 DB_init	do_stub.c	/^void *DB_init()$/;"	f
 DB_real_connect	do_mysql.c	/^void DB_real_connect(void *dbcon)$/;"	f
 DB_real_connect	do_stub.c	/^void DB_real_connect(void *dbcon)$/;"	f
-ERRORBOOK	water.h	18;"	d
-ERRORDB	water.h	19;"	d
-ERRORFILE	water.h	20;"	d
-ERRORLOCK	water.h	16;"	d
-ERRORPAID	water.h	17;"	d
-ERRORUSER	water.h	21;"	d
-FILELEN	water.h	1;"	d
+DEBUG	water.h	1;"	d
+ERRORBOOK	water.h	20;"	d
+ERRORDB	water.h	21;"	d
+ERRORFILE	water.h	22;"	d
+ERRORLOCK	water.h	18;"	d
+ERRORPAID	water.h	19;"	d
+ERRORUSER	water.h	23;"	d
+FILELEN	water.h	3;"	d
 Free	csapp.c	/^void Free(void *ptr)$/;"	f
 GetSysDate	csapp.c	/^char *GetSysDate(int i)$/;"	f
-HEADLEN_26	water.h	11;"	d
-HEADLEN_30	water.h	10;"	d
-LINE7008	water.h	14;"	d
+HEADLEN_26	water.h	13;"	d
+HEADLEN_30	water.h	12;"	d
+LINE7008	water.h	16;"	d
 LINUX	csapp.h	6;"	d
 LISTENQ	csapp.h	37;"	d
 MAXLINE	csapp.h	36;"	d
-MONTHNUM	water.h	12;"	d
+MONTHNUM	water.h	14;"	d
 MSDOS	main_dos.c	1;"	d	file:
 Malloc	csapp.c	/^void *Malloc(size_t size)$/;"	f
 Mysql_query	do_mysql.c	/^int Mysql_query(MYSQL *con, char *SQL)$/;"	f
 Mysql_store_result	do_mysql.c	/^MYSQL_RES* Mysql_store_result(MYSQL *con)$/;"	f
-NAMELEN	water.h	2;"	d
-ORDELEN	water.h	6;"	d
+NAMELEN	water.h	4;"	d
+ORDELEN	water.h	8;"	d
 Open_clientfd	csapp.c	/^int Open_clientfd(char *hostname, int port)$/;"	f
 Open_listenfd	csapp.c	/^int Open_listenfd(int port)$/;"	f
-RECVHEAD	water.h	45;"	d
-RFORMAT7000	water.h	33;"	d
-RFORMAT7001	water.h	34;"	d
-RFORMAT7002	water.h	35;"	d
-RFORMAT7003	water.h	36;"	d
-RFORMAT7004	water.h	37;"	d
-RFORMAT7005	water.h	38;"	d
-RFORMAT7006	water.h	39;"	d
-RFORMAT7007	water.h	40;"	d
-RFORMAT7008	water.h	41;"	d
-RFORMAT7009	water.h	42;"	d
+RECVHEAD	water.h	47;"	d
+RFORMAT7000	water.h	35;"	d
+RFORMAT7001	water.h	36;"	d
+RFORMAT7002	water.h	37;"	d
+RFORMAT7003	water.h	38;"	d
+RFORMAT7004	water.h	39;"	d
+RFORMAT7005	water.h	40;"	d
+RFORMAT7006	water.h	41;"	d
+RFORMAT7007	water.h	42;"	d
+RFORMAT7008	water.h	43;"	d
+RFORMAT7009	water.h	44;"	d
 RIO_BUFSIZE	csapp.h	35;"	d
 Recv	water.h	/^}Recv;$/;"	t	typeref:struct:__anon2
 Rio_read	csapp.c	/^static ssize_t Rio_read(rio_t *rp, char *usrbuf, size_t n)$/;"	f	file:
@@ -66,16 +67,16 @@ Rio_readn	csapp.c	/^ssize_t Rio_readn(int fd, void *userbuf, size_t n)$/;"	f
 Rio_readnb	csapp.c	/^ssize_t Rio_readnb(rio_t *rp, void *usrbuf, size_t n)$/;"	f
 Rio_writen	csapp.c	/^ssize_t Rio_writen(int fd, void *userbuf, size_t n)$/;"	f
 SA	csapp.h	/^typedef struct sockaddr SA;$/;"	t	typeref:struct:sockaddr
-SBODY7000	water.h	30;"	d
-SBODY7004	water.h	31;"	d
-SENDHEAD	water.h	29;"	d
-SLEN7000	water.h	26;"	d
-SUCCESS	water.h	22;"	d
+SBODY7000	water.h	32;"	d
+SBODY7004	water.h	33;"	d
+SENDHEAD	water.h	31;"	d
+SLEN7000	water.h	28;"	d
+SUCCESS	water.h	24;"	d
 Send	water.h	/^}Send;$/;"	t	typeref:struct:__anon3
 Setsockopt	csapp.c	/^void Setsockopt(int s, int level, int optname, const void *optval, int optlen)$/;"	f
 Socket	csapp.c	/^int Socket(int domain, int type, int protocol)$/;"	f
-WACCLEN	water.h	4;"	d
-WDATELEN	water.h	13;"	d
+WACCLEN	water.h	6;"	d
+WDATELEN	water.h	15;"	d
 __CSAPP_H__	csapp.h	2;"	d
 account	water.h	/^	char		account[BACCLEN];	\/\/账户号码$/;"	m	struct:bank
 account	water.h	/^	char	account[WACCLEN + 1];			\/\/账户号码$/;"	m	struct:water
@@ -87,6 +88,8 @@ bill_total	water.h	/^	float	bill_total;			\/\/应收款总计$/;"	m	struct:water
 buffer	water.h	/^	char	buffer[BUFLEN];			\/\/接受区缓存$/;"	m	struct:__anon2
 buffer	water.h	/^	char	buffer[BUFLEN];		\/\/发送报文缓存区$/;"	m	struct:__anon3
 code	water.h	/^	int	code;				\/\/接受报文编码$/;"	m	struct:__anon2
+conn	water.h	/^	int	conn;				\/\/连接描述符$/;"	m	struct:__anon2
+conn	water.h	/^	int	conn;			\/\/连接描述符$/;"	m	struct:__anon3
 date	water.h	/^	char	date[7]; 			\/\/账单日期$/;"	m	struct:bill
 date	water.h	/^	char	date[9]; 				\/\/账单日期$/;"	m	struct:pay
 do7000	do_mysql.c	/^int do7000(Send *S, struct user *p, Recv *R ,void *c)$/;"	f
@@ -109,6 +112,7 @@ do7008	do_mysql.c	/^int do7008(Send *S, Recv *R, void *c)$/;"	f
 do7008	do_stub.c	/^int do7008(Send *S, Recv *R, void *c)$/;"	f
 do7009	do_mysql.c	/^int do7009(struct user *p, int res, void *c)$/;"	f
 do7009	do_stub.c	/^int do7009(struct user *p, int res, void *c)$/;"	f
+doreq	protocol.c	/^int	doreq(Recv *R, Send *S, void *dbcon)$/;"	f
 file	water.h	/^	char	file[FILELEN];		\/\/发送文本名称$/;"	m	struct:__anon3
 filelen	water.h	/^	int	filelen;			\/\/记录附加文件长度$/;"	m	struct:__anon2
 filelen	water.h	/^	int	filelen;		\/\/接受报文编码$/;"	m	struct:__anon3
@@ -118,6 +122,7 @@ len	water.h	/^	int	len;				\/\/接受报文长度,比实际长度-4$/;"	m	struct:__anon2
 len	water.h	/^	int	len;			\/\/发送报文体长度(默认值为26--报文头长度),注:发送实际长度为 len + 4$/;"	m	struct:__anon3
 main	main_dos.c	/^int main(int argc, char *argv[])$/;"	f
 main	main_linux.c	/^int main(int argc, char *argv[])$/;"	f
+main	main_nc_so1.c	/^int main(void)$/;"	f
 money	water.h	/^	float	money;					\/\/账单金额$/;"	m	struct:pay
 money	water.h	/^	float	money;				\/\/账单金额$/;"	m	struct:bill
 months	water.h	/^	int	months;				\/\/应收款月份数目$/;"	m	struct:water
@@ -128,8 +133,8 @@ order	water.h	/^	char	order[ORDELEN + 1];				\/\/银行流水号码,银行专用$/;"	m	str
 paid_total	water.h	/^	float		paid_total;		\/\/已付款总数$/;"	m	struct:bank
 pay	water.h	/^struct pay{$/;"	s
 pbank	water.h	/^	struct	bank	*pbank;			\/\/银行账户$/;"	m	struct:user	typeref:struct:user::bank
-protocol	protocol.c	/^void protocol(int conn, void *dbcon)$/;"	f
 pwater	water.h	/^	struct	water	*pwater;		\/\/水费账户$/;"	m	struct:user	typeref:struct:user::water
+readreq	protocol.c	/^int	readreq(int con, char *recv)$/;"	f
 result	water.h	/^	int	result;			\/\/发送报文结果编码$/;"	m	struct:__anon3
 rio_buf	csapp.h	/^	char rio_buf[RIO_BUFSIZE];$/;"	m	struct:__anon1
 rio_bufptr	csapp.h	/^	char *rio_bufptr;$/;"	m	struct:__anon1
@@ -150,3 +155,4 @@ tax	water.h	/^	float	tax;				\/\/滞纳金$/;"	m	struct:bill
 unix_error	csapp.c	/^void unix_error(char *msg)$/;"	f
 user	water.h	/^struct	user{$/;"	s
 water	water.h	/^struct	water{$/;"	s
+writeresp	protocol.c	/^int	writeresp(Recv *R, Send *S)$/;"	f
