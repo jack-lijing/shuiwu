@@ -46,6 +46,8 @@
 #define	BILLFORMAT	"%-6.6s%-12.2f%-12.2f"
 #define	RECVHEAD	"%4d%4d%22d"		//报文头格式
 #define	BUFLEN		2056	
+
+enum	CODE{ UQUERY=7000, SIGN, MODIFY, DELETE, BQUERY, BPAY, BREDO, BDAILY, BMONTHQ, BMONTHP};
 //接受报文格式
 typedef struct	{
 	char	buffer[BUFLEN];			//接受区缓存
@@ -88,7 +90,7 @@ struct bill{
 struct	water{
 	char	account[WACCLEN + 1];			//账户号码
 	float	bill_total;			//应收款总计
-	int	months;				//应收款月份数目
+	int		months;				//应收款月份数目
 	struct	bill	*table;			//应收月份明细
 };
 
@@ -139,5 +141,5 @@ int do7009(struct user *p, int res, void *c);
  */
 
 int	readreq(int con, char *recv);
-int 	doreq(Recv *R, Send *S, void *con);
+int doreq(Recv *R, Send *S, void *con);
 int	sendresp(Recv *R, Send *S);

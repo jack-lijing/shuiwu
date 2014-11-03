@@ -30,12 +30,12 @@ int	doreq(Recv *R, Send *S, void *dbcon)
 	sscanf(R->buffer, RECVHEAD, &(R->len), &(R->code), &(R->filelen));	//填充报文头结构
 	pbrecv = R->buffer + 30;
 	switch(R->code){
-		case	7000:
+		case	UQUERY:
 			S->len = SLEN7000;
 			sscanf(pbrecv, RFORMAT7000, person.pwater->account );	//获取用户编号
 			do7000(S, &person, R, dbcon);
 			break;
-		case	7001:
+		case	SIGN:
 			sscanf(pbrecv, RFORMAT7001, 
 					person.pwater->account,
 					person.name, 
@@ -43,7 +43,7 @@ int	doreq(Recv *R, Send *S, void *dbcon)
 					person.pbank->account );
 			do7001(S, &person, R, dbcon);
 			break;
-		case	7002:
+		case	MODIFY:
 			sscanf(pbrecv, RFORMAT7002, 
 					person.pwater->account,
 					person.name, 
@@ -51,7 +51,7 @@ int	doreq(Recv *R, Send *S, void *dbcon)
 					person.pbank->account );
 			do7002(S, &person, R, dbcon);
 			break;
-		case	7003:
+		case	DELETE:
 			sscanf(pbrecv, RFORMAT7003, 
 					person.pwater->account,
 					person.name, 
@@ -59,12 +59,12 @@ int	doreq(Recv *R, Send *S, void *dbcon)
 					person.pbank->account );
 			do7003(S, &person, R, dbcon);
 			break;
-		case	7004:
+		case	BQUERY:
 			sscanf(pbrecv, RFORMAT7004 , person.pwater->account);
 			do7004(S, &person, R, dbcon);
 		 	S->len = HEADLEN_26 + BODYLEN7004 + person.pwater->months*30;		 // 30 = 2(月份) + 12(金额) + 12(滞纳金)
 			break;
-		case	7005:
+		case	BPAY:
 			sscanf(pbrecv, RFORMAT7005, 
 					person.pwater->account,
 					person.name, 
@@ -74,7 +74,7 @@ int	doreq(Recv *R, Send *S, void *dbcon)
 					person.pbank->table->date);
 			do7005(S, &person, R, dbcon);
 			break;
-		case	7006:
+		case	BREDO:
 			sscanf(pbrecv, RFORMAT7006, 
 					person.pwater->account,
 					person.name, 
@@ -84,7 +84,7 @@ int	doreq(Recv *R, Send *S, void *dbcon)
 					person.pbank->table->date);
 			do7006(S, &person, R, dbcon);
 			break;
-		case	7007:
+		case	BDAILY:
 			{
 				char	date[9] = {""};
 				int	count	= 0;
@@ -104,6 +104,7 @@ int	doreq(Recv *R, Send *S, void *dbcon)
 				{
 					S->result = ERRORFILE;
 					break;
+			
 				}
 
 
@@ -118,10 +119,10 @@ int	doreq(Recv *R, Send *S, void *dbcon)
 				fclose(fp);
 			}
 			break;
-		case	7008:
+		case	BMONTHQ:
 			do7008(S, R, dbcon);
 			break;
-		case	7009:
+		case	BMONTHP:
 			{
 				char 	line[115];
 				int	res = 0;			//00代表银行扣款成功,99代码扣款失败
@@ -167,7 +168,7 @@ int	writeresp(Recv *R, Send *S)
 	runlog("", 0, "Send=[%s]\n",S->buffer);
 
 	/****** 如果是7008业务，发送批量扣款信息 ************************/
-	if(R->code == 7008 && strlen(S->file) > 0)
+	if(R->code == BMONTHQ && strlen(S->file) > 0)
 	{
 		FILE 	*fp 	= fopen(S->file,"r");
 		int	count = 0;
